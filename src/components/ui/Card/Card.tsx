@@ -2,9 +2,8 @@ import React from "react";
 import ShowList from "components/hocs";
 import { DataPerson } from "interfaces/interfaces";
 import style from "./Card.module.css";
-import { ButtonLike } from "..";
-import { resolvePercent } from "helpers/utils";
-const ProfileImage = "assets/img/profile/";
+import { Button, ButtonLike } from "..";
+import { resolvePercent, resolveProfilePicture, timesAgo } from "helpers/utils";
 
 const Card: React.FC<{ data: DataPerson }> = ({
   data,
@@ -14,7 +13,7 @@ const Card: React.FC<{ data: DataPerson }> = ({
   return (
     <div className={style.card}>
       <img
-        src={`${ProfileImage}${data.picture}`}
+        src={resolveProfilePicture(data.picture)}
         alt={data.name}
         className={style.card__image}
       />
@@ -29,11 +28,11 @@ const Card: React.FC<{ data: DataPerson }> = ({
           </div>
           <div className={style.card__description}>
             <p>{data.description}</p>
-            <span>1 month ago in Emnaiunfoas</span>
-            <div className={style.buttons}>
+            <span>{timesAgo(data.lastUpdated)}</span>
+            <div className={style.card__buttons}>
               <ButtonLike like />
               <ButtonLike />
-              <button className={style.button}>Vote Now</button>
+              <Button >Vote Now</Button>
             </div>
           </div>
         </section>
