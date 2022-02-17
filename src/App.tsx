@@ -1,11 +1,11 @@
 import React from "react";
-import { Card } from "components/ui";
 import "./App.css";
+import { ContainerProfiles } from "components/layout";
 
 function App() {
   return (
     <div className="App">
-      <Card />
+      <ContainerProfiles />
     </div>
   );
 }

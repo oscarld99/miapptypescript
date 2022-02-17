@@ -7,15 +7,17 @@ interface IButtonLike {
   like?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
+  className?: string;
 }
 
 const ButtonLike = ({
   like = false,
   onClick,
   disabled = false,
+  className = "",
 }: IButtonLike) => {
   return (
-    <button className={style.button__like} onClick={onClick}>
+    <button className={`${style.button__like} ${className}`} onClick={onClick}>
       <img
         className={`${like ? style.like__up : style.like__down} ${
           disabled && style["button__like--disabled"]
