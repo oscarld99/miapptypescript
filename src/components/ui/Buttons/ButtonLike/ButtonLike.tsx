@@ -1,7 +1,7 @@
 import React, { MouseEventHandler } from "react";
 import style from "./ButtonLike.module.css";
-import ThumbsUp from "assets/img/thumbs-up.svg";
-import ThumbsDown from "assets/img/thumbs-down.svg";
+import ThumbsUp from "assets/thumbs-up.svg";
+import ThumbsDown from "assets/thumbs-down.svg";
 
 interface IButtonLike {
   like?: boolean;
