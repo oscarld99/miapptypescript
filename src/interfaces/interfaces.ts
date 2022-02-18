@@ -11,3 +11,10 @@ export interface DataPerson {
   lastUpdated: Date;
   votes: Votes;
 }
+
+
+export interface IOptions {
+  id: string
+  title: string
+  selected: boolean
+}

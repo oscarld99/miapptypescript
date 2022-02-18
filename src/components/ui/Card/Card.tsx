@@ -5,10 +5,12 @@ import style from "./Card.module.css";
 import { Button, ButtonLike } from "..";
 import { resolvePercent, resolveProfilePicture, timesAgo } from "helpers/utils";
 
-const Card: React.FC<{ data: DataPerson }> = ({
+const Card: React.FC<{ data: DataPerson, makeVote: any }> = ({
   data,
+  makeVote
 }: {
   data: DataPerson;
+  makeVote: any
 }) => {
   return (
     <div className={style.card}>
@@ -30,8 +32,8 @@ const Card: React.FC<{ data: DataPerson }> = ({
             <p>{data.description}</p>
             <span>{timesAgo(data.lastUpdated)}</span>
             <div className={style.card__buttons}>
-              <ButtonLike like />
-              <ButtonLike />
+              <ButtonLike like onClick={() => makeVote(data.name, 'positive')} />
+              <ButtonLike onClick={() => makeVote(data.name, 'negative')} />
               <Button >Vote Now</Button>
             </div>
           </div>

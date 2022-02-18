@@ -1,0 +1,16 @@
+.menu {
+    width: 173px;
+    height: 36px;
+}
+
+.menu__header {
+    width: 100%;
+    position: relative;
+    border: 2px solid #333333;
+}
+
+.menu__option {
+    width: 100%;
+    border: 2px solid #333333;
+    height: 36px;
+}
