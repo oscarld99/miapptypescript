@@ -28,6 +28,10 @@
   border: 0.5px solid rgba(255, 255, 255, 0);
 }
 
+.button__like--active {
+  border: 0.5px solid white;
+}
+
 .like__down {
   background-color: rgba(var(--color-yellow-negative));
 }

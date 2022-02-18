@@ -3,6 +3,12 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { initializeApp } from "firebase/app";
+import firebaseConfig from "./config";
+import { initStorage } from "helpers/votes";
+
+initializeApp(firebaseConfig);
+initStorage();
 
 ReactDOM.render(
   /* <React.StrictMode>*/

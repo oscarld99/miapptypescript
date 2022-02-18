@@ -1,62 +1,76 @@
 import React from "react";
 import ShowList from "components/hocs";
-import { DataPerson } from "interfaces/interfaces";
+import { DataPerson, IHoc } from "interfaces/interfaces";
 import style from "./List.module.css";
-import { resolvePercent, resolveProfilePicture } from "helpers/utils";
-import { ButtonLike } from "..";
+import {
+  resolvePercent,
+  resolveProfilePicture,
+  resolveProfilePictureWebp,
+  timesAgo,
+} from "helpers/utils";
+import { Button, ButtonLike } from "..";
+import { ThumbsDown, ThumbsUp } from "components/icons";
 
-const List = ({ data }: { data: DataPerson }) => {
+const List = ({ data = {} as DataPerson }: IHoc) => {
+  const totalVotes = data.positive + data.negative;
   return (
     <div className={style.list}>
       {/* button like */}
       <ButtonLike
         disabled
-        like={data.votes.positive > data.votes.negative}
+        like={data.positive > data.negative}
         className={style.like}
       />
       {/* image */}
       <div className={style.list__image}>
-        <img src={resolveProfilePicture(data.picture)} alt={data.name} />
+        <picture>
+          <source
+            srcSet={resolveProfilePictureWebp(data.picture)}
+            type="image/webp"
+          />
+          <img
+            src={resolveProfilePicture(data.picture)}
+            alt={data.name}
+            loading="lazy"
+          />
+        </picture>
       </div>
 
       <main className={style.list__container}>
-        {/*} <section className={style.card__body}>
-          <div className={style.card__name}>
-            <ButtonLike
-              like={data.votes.positive > data.votes.negative}
-              disabled
-            />
+        <section className={style.list__description}>
+          <div className={style.list__name}>
             <p>{data.name}</p>
+            <span>{`${data.description}`}</span>
           </div>
-          <div className={style.card__description}>
-            <p>{data.description}</p>
-            <span>{timesAgo(data.lastUpdated)}</span>
-            <div className={style.card__buttons}>
+          <div className={style.list__buttons}>
+            <span>{`${timesAgo(data.lastUpdated)} in ${data.category}`}</span>
+            <div className={style["list__container-btn"]}>
               <ButtonLike like />
               <ButtonLike />
-              <Button >Vote Now</Button>
+              <Button>Vote Now</Button>
             </div>
           </div>
-  </section>*/}
-        {/* FOOTER */}
+        </section>
 
-        {data.name}
+        {/* FOOTER */}
         <footer className={style.list__footer}>
           <div
             className={style["list__footer--up"]}
             style={{
-              width: `${resolvePercent(data.votes, data.votes.positive)}%`,
+              width: `${resolvePercent(totalVotes, data.positive)}%`,
             }}
           >
-            {`${resolvePercent(data.votes, data.votes.positive)} %`}
+            <ThumbsUp className={style["list__footer-like"]} />
+            {`${resolvePercent(totalVotes, data.positive)} %`}
           </div>
           <div
             className={style["list__footer--down"]}
             style={{
-              width: `${resolvePercent(data.votes, data.votes.negative)}%`,
+              width: `${resolvePercent(totalVotes, data.negative)}%`,
             }}
           >
-            {`${resolvePercent(data.votes, data.votes.negative)} %`}
+            {`${resolvePercent(totalVotes, data.negative)} %`}
+            <ThumbsDown className={style["list__footer-like"]} />
           </div>
         </footer>
       </main>

@@ -48,7 +48,7 @@ hr[role="separator"] {
 
 .nav {
   position: fixed;
-  z-index: 2;
+  z-index: 4;
   top: 0;
   display: flex;
   width: calc(100vw - 2rem);

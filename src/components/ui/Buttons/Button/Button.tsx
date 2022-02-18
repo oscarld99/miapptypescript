@@ -1,16 +1,17 @@
-import React, { MouseEventHandler } from 'react'
+import React, { MouseEventHandler } from "react";
 import style from "./Button.module.css";
 
 interface IButton {
-    onClick?: MouseEventHandler<HTMLButtonElement>;
-    children: React.ReactNode
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  children: React.ReactNode;
 }
 
-const Button = ({ onClick, children }: IButton) => {
-    return (
-        <button className={style.button}>{children}</button>
+const Button = ({ children, ...props }: IButton) => {
+  return (
+    <button className={style.button} {...props}>
+      {children}
+    </button>
+  );
+};
 
-    )
-}
-
-export default Button
+export default Button;

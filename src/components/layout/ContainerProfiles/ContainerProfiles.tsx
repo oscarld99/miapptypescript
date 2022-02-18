@@ -6,22 +6,21 @@ import style from "./ContainerProfiles.module.css";
 
 const ContainerProfiles = () => {
   const [card, setCard] = useState(true);
-  const [options, setOptions] = useState(optionsMenu)
+  const [options, setOptions] = useState(optionsMenu);
 
   useEffect(() => {
-    setCard(options.find(option => option.id === 'grid')?.selected ?? false)
-  }, [options])
-
+    setCard(options.find((option) => option.id === "grid")?.selected ?? false);
+  }, [options]);
 
   const changeView = (id: string) => {
-    const optionsFound = options.find(option => option.id === id)
+    const optionsFound = options.find((option) => option.id === id);
     if (optionsFound) {
-      const newData = options.map(option => ({ ...option, selected: false }))
-      const index = options.indexOf(optionsFound)
-      newData[index].selected = true
-      setOptions(newData)
+      const newData = options.map((option) => ({ ...option, selected: false }));
+      const index = options.indexOf(optionsFound);
+      newData[index].selected = true;
+      setOptions(newData);
     }
-  }
+  };
 
   return (
     <div className={style.container}>
@@ -29,11 +28,14 @@ const ContainerProfiles = () => {
         <Menu options={options} onSelect={changeView} />
       </div>
       <div className={style.container__profiles}>
-        {card ? <div className={style.container__grid}>
-          <Card />
-          </div> : <List />}
+        {card ? (
+          <div className={style.container__grid}>
+            <Card />
+          </div>
+        ) : (
+          <List />
+        )}
       </div>
-
     </div>
   );
 };
