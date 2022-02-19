@@ -26,6 +26,7 @@ const ContainerProfiles = () => {
     <div className={style.container}>
       <div className={style.container__menu}>
         <Menu options={options} onSelect={changeView} />
+        <p>Previous Rulings</p>
       </div>
       <div className={style.container__profiles}>
         {card ? (

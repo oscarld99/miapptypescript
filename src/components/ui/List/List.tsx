@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ShowList from "components/hocs";
 import { DataPerson, IHoc } from "interfaces/interfaces";
 import style from "./List.module.css";
@@ -10,9 +10,23 @@ import {
 } from "helpers/utils";
 import { Button, ButtonLike } from "..";
 import { ThumbsDown, ThumbsUp } from "components/icons";
+import { addVote, removeVote, valdiateVotes } from "helpers/votes";
 
-const List = ({ data = {} as DataPerson }: IHoc) => {
+const List = ({ data = {} as DataPerson, updateByid }: IHoc) => {
+  const [active, setActive] = useState<string | null>(null);
   const totalVotes = data.positive + data.negative;
+
+  const handleActive = (vote: "positive" | "negative") =>
+    active === vote ? setActive(null) : setActive(vote);
+
+  const voteNow = () => {
+    if (active) {
+      updateByid(data.id, active);
+      addVote(data.id ?? "");
+    }
+  };
+
+  const voteAgain = () => removeVote(data.id ?? "");
   return (
     <div className={style.list}>
       {/* button like */}
@@ -43,12 +57,29 @@ const List = ({ data = {} as DataPerson }: IHoc) => {
             <span>{`${data.description}`}</span>
           </div>
           <div className={style.list__buttons}>
-            <span>{`${timesAgo(data.lastUpdated)} in ${data.category}`}</span>
-            <div className={style["list__container-btn"]}>
-              <ButtonLike like />
-              <ButtonLike />
-              <Button>Vote Now</Button>
-            </div>
+            <span>
+              {valdiateVotes(data.id ?? "")
+                ? "Thank you for your vote!"
+                : `${timesAgo(data.lastUpdated)} in ${data.category}`}
+            </span>
+            {valdiateVotes(data.id ?? "") ? (
+              <div className={style.card__buttons}>
+                <Button onClick={voteAgain}>Vote Again</Button>
+              </div>
+            ) : (
+              <div className={style["list__container-btn"]}>
+                <ButtonLike
+                  like
+                  onClick={() => handleActive("positive")}
+                  active={active === "positive"}
+                />
+                <ButtonLike
+                  onClick={() => handleActive("negative")}
+                  active={active === "negative"}
+                />
+                <Button onClick={voteNow}>Vote Now</Button>
+              </div>
+            )}
           </div>
         </section>
 

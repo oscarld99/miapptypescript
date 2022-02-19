@@ -1,7 +1,7 @@
 import { keyStorage } from "constants/constants";
 
 export const initStorage = () =>
-  !getVotes() && localStorage.setItem(keyStorage, ",");
+  !getVotes() && localStorage.setItem(keyStorage, "");
 
 export const getVotes = () => localStorage.getItem(keyStorage);
 
@@ -15,6 +15,6 @@ export const addVote = (id: string) => {
 
 export const removeVote = (id: string) => {
   const aux: string[] = getVotes()?.split(",") ?? [];
-  aux.slice(aux.indexOf(id), 1);
+  aux.splice(aux.indexOf(id), 1);
   localStorage.setItem(keyStorage, aux.join(","));
 };

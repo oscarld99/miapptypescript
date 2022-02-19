@@ -9,22 +9,34 @@ import {
   doc,
 } from "firebase/firestore";
 import { DataPerson, IHoc } from "interfaces/interfaces";
+import { getVotes } from "helpers/votes";
+import Spinner from "components/ui/Spinner";
+import { data as store } from "api";
 
 export function ShowList<T>(Component: ComponentType<IHoc>) {
   return (hocProps: T) => {
     const [data, setData] = useState<DataPerson[]>([] as DataPerson[]);
+    const [loader, setLoader] = useState(false);
 
     useEffect(() => {
       const q = query(collection(getFirestore(), "dataProfiles"));
-      const unsubscribe = onSnapshot(q, (querySnapshot) => {
-        const result = querySnapshot.docs.map((doc) => {
-          return {
-            id: doc.id,
-            ...doc.data(),
-          };
-        });
-        setData(result as unknown as DataPerson[]);
-      });
+      const unsubscribe = onSnapshot(
+        q,
+        (querySnapshot) => {
+          const result = querySnapshot.docs.map((doc) => {
+            return {
+              id: doc.id,
+              ...doc.data(),
+            };
+          });
+          setData(result as unknown as DataPerson[]);
+        },
+        (error) => {
+          console.log(error);
+          setData(store.data as unknown as DataPerson[]);
+        },
+        () => setLoader(false)
+      );
       return () => unsubscribe();
     }, []);
 
@@ -39,14 +51,18 @@ export function ShowList<T>(Component: ComponentType<IHoc>) {
 
     return (
       <>
-        {data.map((item: DataPerson, key: number) => (
-          <Component
-            data={item}
-            key={key}
-            updateByid={updateByid}
-            {...hocProps}
-          />
-        ))}
+        {loader ? (
+          <Spinner />
+        ) : (
+          data.map((item: DataPerson, key: number) => (
+            <Component
+              data={item}
+              key={key}
+              updateByid={updateByid}
+              {...hocProps}
+            />
+          ))
+        )}
       </>
     );
   };

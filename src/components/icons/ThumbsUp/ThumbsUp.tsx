@@ -5,7 +5,7 @@ interface IThumbsUp {
   className?: string;
 }
 const ThumbsUp = (props: IThumbsUp) => (
-  <img {...props} height="20" width="20" src={ThumbsUpIcon} alt={"Like up"} />
+  <img {...props} src={ThumbsUpIcon} alt={"Like up"} />
 );
 
 export default ThumbsUp;
