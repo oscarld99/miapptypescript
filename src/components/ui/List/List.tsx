@@ -63,7 +63,7 @@ const List = ({ data = {} as DataPerson, updateByid }: IHoc) => {
                 : `${timesAgo(data.lastUpdated)} in ${data.category}`}
             </span>
             {valdiateVotes(data.id ?? "") ? (
-              <div className={style.card__buttons}>
+              <div className={style["list__container-btn"]}>
                 <Button onClick={voteAgain}>Vote Again</Button>
               </div>
             ) : (

@@ -19,10 +19,9 @@ export function ShowList<T>(Component: ComponentType<IHoc>) {
     const [loader, setLoader] = useState(false);
 
     useEffect(() => {
-      const q = query(collection(getFirestore(), "dataProfiles"));
-      const unsubscribe = onSnapshot(
-        q,
-        (querySnapshot) => {
+      try {
+        const q = query(collection(getFirestore(), "dataProfiles"));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
           const result = querySnapshot.docs.map((doc) => {
             return {
               id: doc.id,
@@ -30,14 +29,11 @@ export function ShowList<T>(Component: ComponentType<IHoc>) {
             };
           });
           setData(result as unknown as DataPerson[]);
-        },
-        (error) => {
-          console.log(error);
-          setData(store.data as unknown as DataPerson[]);
-        },
-        () => setLoader(false)
-      );
-      return () => unsubscribe();
+        });
+        return () => unsubscribe();
+      } catch (error) {
+        alert(error);
+      }
     }, []);
 
     const updateByid = async (id: string, vote: "positive" | "negative") => {
