@@ -9,14 +9,10 @@ import {
   doc,
 } from "firebase/firestore";
 import { DataPerson, IHoc } from "interfaces/interfaces";
-import { getVotes } from "helpers/votes";
-import Spinner from "components/ui/Spinner";
-import { data as store } from "api";
 
 export function ShowList<T>(Component: ComponentType<IHoc>) {
   return (hocProps: T) => {
     const [data, setData] = useState<DataPerson[]>([] as DataPerson[]);
-    const [loader, setLoader] = useState(false);
 
     useEffect(() => {
       try {
@@ -47,36 +43,17 @@ export function ShowList<T>(Component: ComponentType<IHoc>) {
 
     return (
       <>
-        {loader ? (
-          <Spinner />
-        ) : (
-          data.map((item: DataPerson, key: number) => (
-            <Component
-              data={item}
-              key={key}
-              updateByid={updateByid}
-              {...hocProps}
-            />
-          ))
-        )}
+        {data.map((item: DataPerson, key: number) => (
+          <Component
+            data={item}
+            key={key}
+            updateByid={updateByid}
+            {...hocProps}
+          />
+        ))}
       </>
     );
   };
 }
-/*
-const ShowList =
-  (Component: React.FC<{ data: DataPerson; makeVote: any }>): React.FC =>
-  (props: any) => {
-    /*  const makeVote = (name: string, vote: "positive" | "negative") => {
-      const profileFound = data.data.find((option) => option.name === name);
-      if (profileFound) {
-        const newData = data.data.map((option) => ({
-          ...option,
-          selected: false,
-        }));
-        const index = data.data.indexOf(profileFound);
-        newData[index].votes[vote]++;
-      }
-    };  };*/
 
 export default ShowList;
