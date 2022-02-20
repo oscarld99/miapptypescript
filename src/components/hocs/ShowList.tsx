@@ -36,6 +36,7 @@ export function ShowList<T>(Component: ComponentType<IHoc>) {
       const profileFound = data.find((option) => option.id === id);
       if (profileFound) {
         profileFound[vote] = profileFound[vote] + 1;
+        profileFound.lastUpdated = new Date().toISOString();
         const ref = doc(getFirestore(), "dataProfiles", id);
         await updateDoc(ref, profileFound as any);
       }

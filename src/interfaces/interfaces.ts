@@ -9,7 +9,7 @@ export interface DataPerson {
   description: string;
   category: string;
   picture: string;
-  lastUpdated: Date;
+  lastUpdated: Date | string;
   positive: number;
   negative: number;
   active?: string;

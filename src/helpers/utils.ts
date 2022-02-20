@@ -41,7 +41,7 @@ export const resolveProfilePictureWebp = (picture: string) => {
   return profilesPictures[picture];
 };
 
-export const timesAgo = (date: Date) => {
+export const timesAgo = (date: Date | string) => {
   const seconds = Math.floor(
     ((new Date() as any) - (new Date(date) as any)) / 1000
   );
